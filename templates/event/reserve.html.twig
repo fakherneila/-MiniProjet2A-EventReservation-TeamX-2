@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Reserve - {{ event.title }}{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Reserve Seats for {{ event.title }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong>Event Details:</strong><br>
+                        Date: {{ event.date|date("F d, Y H:i") }}<br>
+                        Location: {{ event.location }}<br>
+                        Available Seats: {{ event.availableSeats }} / {{ event.seats }}
+                    </div>
+                    
+                    {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <button type="submit" class="btn btn-success mt-3">Confirm Reservation</button>
+                        <a href="{{ path("event_show", {"id": event.id}) }}" class="btn btn-secondary mt-3">Cancel</a>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

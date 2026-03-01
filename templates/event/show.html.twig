@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ event.title }} - Event Details{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">{{ event.title }}</li>
+                </ol>
+            </nav>
+            
+            <div class="card">
+                <img src="{{ event.image }}" class="card-img-top" alt="{{ event.title }}" style="height: 400px; object-fit: cover;">
+                
+                <div class="card-body">
+                    <h1 class="card-title">{{ event.title }}</h1>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="alert alert-info">
+                                <i class="fas fa-calendar"></i> <strong>Date:</strong> {{ event.date|date("F d, Y H:i") }}<br>
+                                <i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ event.location }}<br>
+                                <i class="fas fa-users"></i> <strong>Available Seats:</strong> {{ event.availableSeats }} / {{ event.seats }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4>Description</h4>
+                        <p>{{ event.description }}</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="/" class="btn btn-secondary">Back to Events</a>
+                        {% if event.availableSeats > 0 %}
+                            <button class="btn btn-success" onclick="alert('This is a demo. In production, you would be redirected to the reservation form.')">
+                                Reserve Now
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
