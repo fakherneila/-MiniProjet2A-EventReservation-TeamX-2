@@ -1,24 +1,23 @@
-
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
+### Symfony ###
+/.env
 /public/bundles/
 /var/
 /vendor/
-###< symfony/framework-bundle ###
+/.php-cs-fixer.cache
+/.phpunit.result.cache
+/composer.lock
+/symfony.lock
 
-###> phpunit/phpunit ###
-/phpunit.xml
-/.phpunit.cache/
-###< phpunit/phpunit ###
+### Docker ###
+/docker/php/php.ini
 
-###> symfony/asset-mapper ###
-/public/assets/
-/assets/vendor/
-###< symfony/asset-mapper ###
+### IDE ###
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
 
-###> lexik/jwt-authentication-bundle ###
-/config/jwt/*.pem
-###< lexik/jwt-authentication-bundle ###
+### OS ###
+Thumbs.db
