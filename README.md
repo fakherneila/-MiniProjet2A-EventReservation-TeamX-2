@@ -1,54 +1,42 @@
-# MiniProjet2A-EventReservation-TeamX-2
-
-A production-ready Symfony event reservation system with modern authentication methods.
+# MiniProjet2A-EventReservation-TeamX
 
 ## Project Description
-
-This project is a complete event reservation system built with Symfony 6.4 that allows users to browse events, reserve seats, and administrators to manage events and reservations. The system features both traditional authentication and modern passkeys (WebAuthn) for passwordless login.
-
-## Features
-
-### User Features
-- **Authentication**: Register, Login with username/password, Login with Passkeys (WebAuthn), Logout
-- **Event Browsing**: Display events with pagination, Search events
-- **Event Details**: View event details including title, description, date, location, seats, image
-- **Reservation System**: Reserve seats with name, email, and phone
-
-### Admin Features
-- **Admin Dashboard**: Overview of events and reservations
-- **Event Management**: Create, Edit, Delete events with image upload
-- **Reservation Management**: View reservations by event, Filter reservations, Delete reservations
+Event Reservation System built with Symfony 6.4 featuring:
+- User authentication (JWT + Passkeys/WebAuthn)
+- Event browsing with search and pagination
+- Event reservation system
+- Admin dashboard for event and reservation management
 
 ## Technology Stack
+- Symfony 6.4
+- PHP 8.4
+- MySQL 8.0
+- Docker
+- Bootstrap 5
+- JWT Authentication
+- WebAuthn Passkeys
 
-### Backend
-- **Symfony**: 6.4
-- **PHP**: 8.4+
-- **Doctrine ORM**: Database management
-- **MySQL**: 8.0
-- **JWT**: LexikJWTAuthenticationBundle for API authentication
-- **WebAuthn**: Passkeys authentication
+## Installation
+1. Clone repository
+2. Run `docker-compose up -d`
+3. Run `docker-compose exec php composer install`
+4. Setup database: `docker-compose exec php bin/console doctrine:database:create`
+5. Update schema: `docker-compose exec php bin/console doctrine:schema:update --force`
+6. Access: http://localhost:8080
 
-### Frontend
-- **Twig**: Templating engine
-- **Bootstrap 5**: Responsive UI framework
-- **Vanilla JavaScript**: Interactive features
+## Docker Services
+- PHP: http://localhost:8080
+- phpMyAdmin: http://localhost:8081 (user: event_user, pass: event_password)
 
-### DevOps
-- **Docker**: Containerization
-- **Docker Compose**: Multi-container orchestration
-- **Nginx**: Web server
-- **phpMyAdmin**: Database management interface
-
-## Installation Instructions
-
-### Prerequisites
-- Docker and Docker Compose installed
-- Git
-
-### Setup Steps
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/MiniProjet2A-EventReservation-TeamX-2.git
-cd MiniProjet2A-EventReservation-TeamX-2
+## Features
+- ✅ User registration/login with JWT
+- ✅ Passkeys (WebAuthn) authentication
+- ✅ Event listing with pagination
+- ✅ Search events
+- ✅ Event details page
+- ✅ Reservation system
+- ✅ Admin dashboard
+- ✅ Event CRUD operations
+- ✅ Reservation management
+- ✅ Responsive Bootstrap 5 UI
+- ✅ Docker containerization
