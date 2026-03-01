@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block body %}
+    <h1>Admin Dashboard</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Total Events</h5>
+                    <p class="card-text display-4">{{ totalEvents }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Total Reservations</h5>
+                    <p class="card-text display-4">{{ totalReservations }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h4>Event Management</h4>
+            <a href="{{ path("admin_event_new") }}" class="btn btn-primary">Create New Event</a>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Seats</th>
+                        <th>Available</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.title }}</td>
+                            <td>{{ event.date|date("M d, Y") }}</td>
+                            <td>{{ event.location }}</td>
+                            <td>{{ event.seats }}</td>
+                            <td>{{ event.availableSeats }}</td>
+                            <td>
+                                <a href="{{ path("admin_event_edit", {"id": event.id}) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <form method="post" action="{{ path("admin_event_delete", {"id": event.id}) }}" style="display: inline-block;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token("delete" ~ event.id) }}">
+                                    <button class="btn btn-sm btn-danger" onclick="return confirm("Are you sure?")">Delete</button>
+                                </form>
+                                <a href="{{ path("admin_reservations", {"event": event.id}) }}" class="btn btn-sm btn-info">View Reservations</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">No events found.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
