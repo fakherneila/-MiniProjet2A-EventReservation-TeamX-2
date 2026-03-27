@@ -1,42 +1,47 @@
-# MiniProjet2A-EventReservation-TeamX
+# Event Reservation System
 
-## Project Description
-Event Reservation System built with Symfony 6.4 featuring:
-- User authentication (JWT + Passkeys/WebAuthn)
-- Event browsing with search and pagination
-- Event reservation system
-- Admin dashboard for event and reservation management
+A production-ready Symfony event reservation system with modern authentication methods.
 
-## Technology Stack
-- Symfony 6.4
-- PHP 8.4
-- MySQL 8.0
-- Docker
-- Bootstrap 5
-- JWT Authentication
-- WebAuthn Passkeys
+## Version 1.2.0 - New Features! 🚀
 
-## Installation
-1. Clone repository
-2. Run `docker-compose up -d`
-3. Run `docker-compose exec php composer install`
-4. Setup database: `docker-compose exec php bin/console doctrine:database:create`
-5. Update schema: `docker-compose exec php bin/console doctrine:schema:update --force`
-6. Access: http://localhost:8080
-
-## Docker Services
-- PHP: http://localhost:8080
-- phpMyAdmin: http://localhost:8081 (user: event_user, pass: event_password)
+### Latest Updates (March 27, 2026)
+- ✨ **Interactive Reservation Modal**: Beautiful modal form with validation
+- 📊 **Database Integration**: Events are now stored in MySQL database
+- 🔄 **Import Command**: Easy import of events via console command
+- 📱 **Enhanced UI**: Loading states, success notifications, better UX
+- 📚 **User Manual**: Complete documentation for users and admins
 
 ## Features
-- ✅ User registration/login with JWT
-- ✅ Passkeys (WebAuthn) authentication
-- ✅ Event listing with pagination
-- ✅ Search events
-- ✅ Event details page
-- ✅ Reservation system
-- ✅ Admin dashboard
-- ✅ Event CRUD operations
-- ✅ Reservation management
-- ✅ Responsive Bootstrap 5 UI
-- ✅ Docker containerization
+
+### User Features
+- **Authentication**: Register, Login, Passkeys (WebAuthn), Logout
+- **Event Browsing**: Pagination, search, event details
+- **Reservation System**: Modal form with validation and confirmation
+
+### Admin Features
+- **Dashboard**: Statistics and analytics
+- **Event Management**: CRUD operations with image upload
+- **Reservation Management**: View, filter, delete reservations
+
+## Quick Start
+
+```bash
+# Clone repository
+git clone https://github.com/fakherneila/-MiniProjet2A-EventReservation-TeamX-2.git
+cd -MiniProjet2A-EventReservation-TeamX-2
+
+# Start Docker containers
+docker-compose up -d
+
+# Install dependencies
+docker-compose exec php composer install
+
+# Setup database
+docker-compose exec php bin/console doctrine:database:create
+docker-compose exec php bin/console doctrine:schema:update --force
+
+# Import events
+docker-compose exec php bin/console app:import-events
+
+# Clear cache
+docker-compose exec php bin/console cache:clear 
