@@ -1,0 +1,108 @@
+<div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="reservationModalLabel">
+                    <i class="fas fa-ticket-alt"></i> Reserve Your Seat
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="eventInfo" class="alert alert-info mb-3">
+                    <strong>Event:</strong> <span id="eventTitle"></span><br>
+                    <strong>Date:</strong> <span id="eventDate"></span><br>
+                    <strong>Location:</strong> <span id="eventLocation"></span>
+                </div>
+                
+                <form id="reservationForm">
+                    <input type="hidden" id="eventId" name="event_id">
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                        <div class="invalid-feedback">Please enter your full name.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address *</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number *</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                        <div class="invalid-feedback">Please enter your phone number.</div>
+                    </div>
+                    
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle"></i> 
+                        <small>You will receive a confirmation email with your reservation details.</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="submitReservation()">
+                    <i class="fas fa-check"></i> Confirm Reservation
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function openReservationModal(eventId, eventTitle, eventDate, eventLocation) {
+    document.getElementById('eventId').value = eventId;
+    document.getElementById('eventTitle').textContent = eventTitle;
+    document.getElementById('eventDate').textContent = eventDate;
+    document.getElementById('eventLocation').textContent = eventLocation;
+    
+    // Clear form
+    document.getElementById('reservationForm').reset();
+    
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('reservationModal'));
+    modal.show();
+}
+
+function submitReservation() {
+    const form = document.getElementById('reservationForm');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const eventId = document.getElementById('eventId').value;
+    
+    // Validate form
+    if (!name || !email || !phone) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    
+    if (!email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    
+    // Show loading state
+    const submitBtn = document.querySelector('#reservationModal .btn-success');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    submitBtn.disabled = true;
+    
+    // Simulate API call (replace with actual AJAX call)
+    setTimeout(() => {
+        alert(`✓ Reservation confirmed for ${name}!\n\nCheck your email at ${email} for confirmation details.`);
+        
+        // Reset button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Close modal
+        bootstrap.Modal.getInstance(document.getElementById('reservationModal')).hide();
+        
+        // Show success toast
+        showToast('Reservation confirmed successfully!', 'success');
+    }, 1500);
+}
+</script>
