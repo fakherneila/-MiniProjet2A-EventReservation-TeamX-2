@@ -5,33 +5,155 @@
 {% block body %}
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Login</h3>
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Login to Your Account</h3>
                 </div>
                 <div class="card-body">
+                    <!-- Traditional Login Form -->
                     <form method="post">
                         {% if error %}
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, "security") }}</div>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-triangle"></i> {{ error.messageKey|trans(error.messageData, "security") }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
                         {% endif %}
 
                         <div class="mb-3">
-                            <label for="username" class="form-label">Email</label>
-                            <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" required autofocus>
+                            <label for="username" class="form-label">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" value="{{ last_username }}" name="_username" id="username" 
+                                       class="form-control" required autofocus>
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" name="_password" id="password" class="form-control" required>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" name="_password" id="password" class="form-control" required>
+                            </div>
                         </div>
 
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token("authenticate") }}">
 
-                        <button class="btn btn-primary" type="submit">Sign in</button>
-                        <a href="{{ path("app_register") }}" class="btn btn-link">Register</a>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" type="submit">
+                                <i class="fas fa-sign-in-alt"></i> Sign in
+                            </button>
+                        </div>
                     </form>
+
+                    <hr class="my-4">
+
+                    <!-- Passkey Section - Conditional Display -->
+                    <div id="passkeySection" style="display: none;">
+                        <div class="text-center mb-3">
+                            <span class="badge bg-secondary">Or</span>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button id="passkeyLoginBtn" class="btn btn-outline-success btn-lg" onclick="loginWithPasskey()">
+                                <i class="fas fa-fingerprint"></i> Login with Passkey
+                            </button>
+                        </div>
+                        
+                        <div id="passkeyStatus" class="alert alert-info mt-3" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> <span id="passkeyMessage"></span>
+                        </div>
+                    </div>
+
+                    <!-- Fallback Message for Linux -->
+                    <div id="passkeyFallback" class="alert alert-warning mt-3" style="display: none;">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>Passkey Login Not Available on Linux</strong><br>
+                        <small>Passkeys require specific hardware support. You can still login with your email and password above.</small>
+                        <hr>
+                        <div class="text-center">
+                            <a href="{{ path('app_register') }}" class="btn btn-sm btn-primary">Register New Account</a>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ path('app_register') }}" class="text-decoration-none">Don't have an account? Register</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Detect if passkey is supported and available
+        function isPasskeySupported() {
+            // Check if WebAuthn is supported
+            if (!window.PublicKeyCredential) {
+                return false;
+            }
+            
+            // Check if it's Linux (WebAuthn support can be limited)
+            const isLinux = navigator.platform.toLowerCase().includes('linux');
+            if (isLinux) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        async function loginWithPasskey() {
+            const statusDiv = document.getElementById('passkeyStatus');
+            const messageSpan = document.getElementById('passkeyMessage');
+            const loginBtn = document.getElementById('passkeyLoginBtn');
+            
+            statusDiv.style.display = 'block';
+            messageSpan.textContent = 'Checking for security keys...';
+            loginBtn.disabled = true;
+            
+            try {
+                // Check if passkeys are available
+                const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+                
+                if (!available) {
+                    messageSpan.textContent = 'No passkey device found. Please use password login.';
+                    setTimeout(() => {
+                        statusDiv.style.display = 'none';
+                        loginBtn.disabled = false;
+                    }, 3000);
+                    return;
+                }
+                
+                messageSpan.textContent = 'Please use your security key or biometrics...';
+                
+                // Here you would implement the actual WebAuthn authentication
+                // For now, show a demo message
+                setTimeout(() => {
+                    messageSpan.textContent = 'Demo: Passkey authentication would work here.';
+                    setTimeout(() => {
+                        statusDiv.style.display = 'none';
+                        loginBtn.disabled = false;
+                    }, 2000);
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Passkey error:', error);
+                messageSpan.textContent = 'Passkey login failed: ' + error.message;
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                    loginBtn.disabled = false;
+                }, 3000);
+            }
+        }
+        
+        // Check and show appropriate UI on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isPasskeySupported()) {
+                document.getElementById('passkeySection').style.display = 'block';
+            } else {
+                document.getElementById('passkeyFallback').style.display = 'block';
+            }
+        });
+    </script>
 {% endblock %}
