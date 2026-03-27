@@ -309,3 +309,59 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-color);
 }
+
+/* Button Styles Enhancement */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    border: none;
+    color: white;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #138496 0%, #0f6674 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: none;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+}
+
+/* Card Buttons Container */
+.card-body .d-grid {
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .d-grid.gap-3.d-md-flex {
+        flex-direction: column;
+    }
+    
+    .btn-lg {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

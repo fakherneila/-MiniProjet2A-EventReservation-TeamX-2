@@ -20,7 +20,7 @@
                     
                     <div class="row mb-4">
                         <div class="col-md-4">
-                            <div class="info-item p-3 border rounded">
+                            <div class="info-item p-3 border rounded text-center">
                                 <i class="fas fa-calendar-alt fa-2x text-primary mb-2"></i>
                                 <div>
                                     <strong>Date & Time</strong><br>
@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="info-item p-3 border rounded">
+                            <div class="info-item p-3 border rounded text-center">
                                 <i class="fas fa-map-marker-alt fa-2x text-danger mb-2"></i>
                                 <div>
                                     <strong>Location</strong><br>
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="info-item p-3 border rounded">
+                            <div class="info-item p-3 border rounded text-center">
                                 <i class="fas fa-users fa-2x text-success mb-2"></i>
                                 <div>
                                     <strong>Available Seats</strong><br>
@@ -55,22 +55,43 @@
                         <p class="lead">{{ event.description }}</p>
                     </div>
                     
-                    <div class="text-center mt-4">
-                        <a href="/" class="btn btn-secondary btn-lg me-2">
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Important Information:</strong><br>
+                                <small>Please arrive 15 minutes before the event starts. 
+                                Bring your confirmation email for check-in.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-clock"></i>
+                                <strong>Cancellation Policy:</strong><br>
+                                <small>Free cancellation up to 24 hours before the event.</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-3 d-md-flex justify-content-md-center mt-4">
+                        <a href="/" class="btn btn-secondary btn-lg px-4">
                             <i class="fas fa-arrow-left"></i> Back to Events
                         </a>
+                        <a href="/" class="btn btn-info btn-lg px-4">
+                            <i class="fas fa-list"></i> Browse More Events
+                        </a>
                         {% if event.availableSeats > 0 %}
-                            <button class="btn btn-success btn-lg" 
+                            <button class="btn btn-success btn-lg px-4" 
                                     onclick="openReservationModal(
                                         '{{ event.id }}', 
-                                        '{{ event.title }}', 
+                                        '{{ event.title|escape('js') }}', 
                                         '{{ event.date|date("F d, Y H:i") }}', 
-                                        '{{ event.location }}'
+                                        '{{ event.location|escape('js') }}'
                                     )">
                                 <i class="fas fa-ticket-alt"></i> Reserve Now
                             </button>
                         {% else %}
-                            <button class="btn btn-danger btn-lg" disabled>
+                            <button class="btn btn-danger btn-lg px-4" disabled>
                                 <i class="fas fa-ban"></i> Fully Booked
                             </button>
                         {% endif %}
@@ -83,12 +104,16 @@
     {% include 'event/reserve_modal.html.twig' %}
 {% endblock %}
 
-{% block javascripts %}
+{% block stylesheets %}
     {{ parent() }}
-    <script>
-        function showToast(message, type) {
-            // You can implement toast notifications here
-            console.log(message);
+    <style>
+        .info-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #f8f9fa;
         }
-    </script>
+        .info-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
 {% endblock %}
