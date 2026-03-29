@@ -1,4 +1,4 @@
-/* Modern Event Reservation System CSS */
+/* global CSS */
 
 :root {
     --primary-color: #4361ee;
@@ -20,7 +20,7 @@ body {
     color: var(--dark-color);
 }
 
-/* Navbar Enhancement */
+/* Navbar */
 .navbar {
     background: rgba(33, 37, 41, 0.95) !important;
     backdrop-filter: blur(10px);
@@ -310,7 +310,7 @@ body {
     background: var(--secondary-color);
 }
 
-/* Button Styles Enhancement */
+/* Button Styles */
 .btn {
     border-radius: 8px;
     font-weight: 500;

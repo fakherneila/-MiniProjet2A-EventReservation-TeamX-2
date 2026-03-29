@@ -1,4 +1,3 @@
-// Modern Event Reservation System JavaScript
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
